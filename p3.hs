@@ -101,49 +101,42 @@ estanRelacionados a b = (mod a b) == 0
 --4.
 --a.
 prodInt :: (Float, Float) -> (Float, Float) -> Float
-prodInt a b = fst a * fst b + snd a * snd b
+prodInt (a0, a1) (b0, b1) = a0 * b0 + a1 * b1
 
 --b.
 todoMenor :: (Float, Float) -> (Float, Float) -> Bool
-todoMenor a b = (fst a < fst b) && (snd a < snd b)
+todoMenor (a0, a1) (b0, b1) = (a0 < b0) && (a1 < b1)
 
 --c.
 distanciaPuntos :: (Float, Float) -> (Float, Float) -> Float
-distanciaPuntos a b = sqrt ((fst b - fst a)**2 + (snd b - snd a)**2)
+distanciaPuntos (x1, y1) (x2, y2) = sqrt ((x2 - x1)**2 + (y2 - y1)**2)
 
 --d.
 sumaTerna :: (Float, Float, Float) -> Float
-sumaTerna a = fst3 a + snd3 a + trd3 a 
-
-fst3 :: (Num t) => (t, t, t) -> t
-snd3 :: (Num t) => (t, t, t) -> t
-trd3 :: (Num t) => (t, t, t) -> t
-fst3 (n, _, _) = n
-snd3 (_, n, _) = n
-trd3 (_, _, n) = n
+sumaTerna (a0, a1, a2) = a0 + a1 + a2
 
 --e.
 sumarSoloMultiplos :: (Integer, Integer, Integer) -> Integer -> Integer
-sumarSoloMultiplos a n | ((mod (fst3 a) n) == 0) && ((mod (snd3 a) n) == 0) && ((mod (trd3 a) n) == 0) = (fst3 a) + (snd3 a) + (trd3 a)
-                       | ((mod (fst3 a) n) == 0) && ((mod (snd3 a) n) == 0) && ((mod (trd3 a) n) /= 0) = (fst3 a) + (snd3 a)
-                       | ((mod (fst3 a) n) == 0) && ((mod (snd3 a) n) /= 0) && ((mod (trd3 a) n) == 0) = (fst3 a) + (trd3 a)
-                       | ((mod (fst3 a) n) /= 0) && ((mod (snd3 a) n) == 0) && ((mod (trd3 a) n) == 0) = (snd3 a) + (trd3 a)
-                       | ((mod (fst3 a) n) == 0) && ((mod (snd3 a) n) /= 0) && ((mod (trd3 a) n) /= 0) = (fst3 a)
-                       | ((mod (fst3 a) n) /= 0) && ((mod (snd3 a) n) == 0) && ((mod (trd3 a) n) /= 0) = (snd3 a)
-                       | ((mod (fst3 a) n) /= 0) && ((mod (snd3 a) n) /= 0) && ((mod (trd3 a) n) == 0) = (trd3 a)
-                       | otherwise = 4
+sumarSoloMultiplos (a0, a1, a2) n  | ((mod a0 n) == 0) && ((mod a1 n) == 0) && ((mod a2 n) == 0) = a0 + a1 + a2
+                                  | ((mod a0 n) == 0) && ((mod a1 n) == 0) && ((mod a2 n) /= 0) = a0 + a1
+                                  | ((mod a0 n) == 0) && ((mod a1 n) /= 0) && ((mod a2 n) == 0) = a0 + a2
+                                  | ((mod a0 n) /= 0) && ((mod a1 n) == 0) && ((mod a2 n) == 0) = a1 + a2
+                                  | ((mod a0 n) == 0) && ((mod a1 n) /= 0) && ((mod a2 n) /= 0) = a0
+                                  | ((mod a0 n) /= 0) && ((mod a1 n) == 0) && ((mod a2 n) /= 0) = a1
+                                  | ((mod a0 n) /= 0) && ((mod a1 n) /= 0) && ((mod a2 n) == 0) = a2
+                                  | otherwise = 4
 
 --f.
 posPrimerPar :: (Integer, Integer, Integer) -> Integer
-posPrimerPar a | (mod (fst3 a) 2) == 0 = 0
-               | ((mod (fst3 a) 2) /= 0) && ((mod (snd3 a) 2) == 0) = 1
-               | ((mod (fst3 a) 2) /= 0) && ((mod (snd3 a) 2) /= 0) && ((mod (trd3 a) 2) == 0) = 2
-               | otherwise = 4
+posPrimerPar (a0, a1, a2) | (mod a0 2) == 0 = 0
+                          | ((mod a0 2) /= 0) && ((mod a1 2) == 0) = 1
+                          | ((mod a0 2) /= 0) && ((mod a1 2) /= 0) && ((mod a2 2) == 0) = 2
+                          | otherwise = 4
 
 --g.
-crearPar :: t1 -> t2 -> (t1,t2)
-crearPar a b = (a, b)
+crearPar :: t1 -> t2 -> (t1, t2)
+crearPar a0 a1 = (a0, a1)
 
 --h.
-invertir :: (t1,t2) -> (t2,t1)
-invertir a = ((snd a), (fst a))
+invertir :: (t1, t2) -> (t2, t1)
+invertir (a0, a1) = (a1, a0)
