@@ -87,7 +87,7 @@ digitoUnidades n = mod n 10
 
 --j.
 digitoDecenas :: Integer -> Integer
-digitoDecenas n = div ((mod n 100) - (digitoUnidades n)) 10
+digitoDecenas n = digitoUnidades (div n 10)
 
 --3.
 estanRelacionados :: Integer -> Integer -> Bool
@@ -116,6 +116,8 @@ sumaTerna :: (Float, Float, Float) -> Float
 sumaTerna (a0, a1, a2) = a0 + a1 + a2
 
 --e.
+esMultiplo :: 
+
 sumarSoloMultiplos :: (Integer, Integer, Integer) -> Integer -> Integer
 sumarSoloMultiplos (a0, a1, a2) n  | ((mod a0 n) == 0) && ((mod a1 n) == 0) && ((mod a2 n) == 0) = a0 + a1 + a2
                                   | ((mod a0 n) == 0) && ((mod a1 n) == 0) && ((mod a2 n) /= 0) = a0 + a1
