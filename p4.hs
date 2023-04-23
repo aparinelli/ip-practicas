@@ -22,6 +22,7 @@ sumaImpares :: Integer -> Integer
 sumaImpares n | n == 1 = 1
               | n > 1 = (n * 2 - 1) + sumaImpares(n - 1)
 
+
 --5.
 medioFact :: Integer -> Integer
 medioFact n | n == 0 = 1
@@ -152,19 +153,12 @@ esPrimo n | menorDivisor n == n = True
 
 --c.
 sonCoprimos :: Integer -> Integer -> Bool
-sonCoprimos a b | esPrimo a && esPrimo b = True
-                | menorDivisor a == menorDivisor b = False
-                | otherwise = 
-
--- 2 * 3 = 6
--- 3 * 5 = 15
-
--- 2 * 2 * 5 = 20
--- 2 * 2 * 3 = 12
-
--- 3 * 3 = 9
--- 2 * 2 = 4
-
+sonCoprimos a b | menorDivisor a == menorDivisor b = False
+                | ambosPrimos && a /= b = True
+                | otherwise = sonCoprimos (menorDivisor a) cocienteB && sonCoprimos cocienteA (menorDivisor b)
+                where ambosPrimos = esPrimo a && esPrimo b
+                      cocienteA = div a (menorDivisor a)
+                      cocienteB = div b (menorDivisor b)
 --18.
 mayorDigitoPar :: Integer -> Integer
 mayorDigitoPar n | esPar ultimo = elMayor ultimo (mayorDigitoPar restoDelNumero) 
