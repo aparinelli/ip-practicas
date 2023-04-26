@@ -112,6 +112,10 @@ sumarElPrimero :: [Integer] -> [Integer]
 sumarElPrimero s = sumarN (head s) s
 
 --3.6
+sumarElUltimo :: [Integer] -> [Integer]
+sumarElUltimo s = sumarN (ultimo s) s
+
+--3.7
 pares :: [Integer] -> [Integer]
 pares [] = []
 pares s 
@@ -121,7 +125,7 @@ pares s
 esPar :: Integer -> Bool
 esPar a = mod a 2 == 0
 
---3.7
+--3.8
 multiplosDeN :: Integer -> [Integer] -> [Integer]
 multiplosDeN _ [] = []
 multiplosDeN n s
@@ -130,3 +134,17 @@ multiplosDeN n s
 
 esMultiplo :: Integer -> Integer -> Bool
 esMultiplo a b = mod a b == 0
+
+--3.9
+ordenar :: [Integer] -> [Integer]
+ordenar [] = []
+ordenar s | longitud s == 1 = s
+          | otherwise = ordenar (quitar (maximo s) s) ++ [maximo s]
+
+--4.
+--4.1.
+
+
+-- [2,1] -> [1,2]
+-- [2,3,1] -> [1,2,3]
+-- []
