@@ -38,4 +38,6 @@ ver pattern_matching.hs
 
 ## Conjuntos
 
-
+```
+ver conjuntos.hs
+```
