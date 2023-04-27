@@ -144,7 +144,7 @@ ordenar s | longitud s == 1 = s
 --4.
 --4.1.
 sacarBlancosRepetidos :: [Char] -> [Char]
-sacarBlancosRepetidos s = sacarBlancosRepetidosAux (limpiarPrincipioYFinal s)
+sacarBlancosRepetidos s = sacarBlancosRepetidosAux (limpiarExtremos s)
 
 sacarBlancosRepetidosAux :: [Char] -> [Char]
 sacarBlancosRepetidosAux s
@@ -152,16 +152,16 @@ sacarBlancosRepetidosAux s
  | head s == ' ' && segundo s == ' ' =  sacarBlancosRepetidosAux (tail s)
  | otherwise = (head s) : sacarBlancosRepetidosAux (tail s)
 
-limpiarPrincipioYFinal :: [Char] -> [Char]
+limpiarExtremos :: [Char] -> [Char]
 -- elimina todos los blancos del principio y del final de la lista
-limpiarPrincipioYFinal s
+limpiarExtremos s
  | ultimo s /= ' ' && head s /= ' ' = s
- | head s == ' ' = limpiarPrincipioYFinal (tail s)
- | ultimo s == ' ' = limpiarPrincipioYFinal (principio s)
+ | head s == ' ' = limpiarExtremos (tail s)
+ | ultimo s == ' ' = limpiarExtremos (principio s)
 
 --4.2
 contarPalabras :: [Char] -> Integer
-contarPalabras s = contarPalabrasAux (limpiarPrincipioYFinal (sacarBlancosRepetidos s))
+contarPalabras s = contarPalabrasAux (limpiarExtremos (sacarBlancosRepetidos s))
 
 contarPalabrasAux :: [Char] -> Integer
 contarPalabrasAux s
@@ -169,6 +169,62 @@ contarPalabrasAux s
  | head s == ' ' = 1 + contarPalabrasAux (tail s)
  | otherwise = contarPalabrasAux (tail s)
 
--- [2,1] -> [1,2]
--- [2,3,1] -> [1,2,3]
--- []
+--4.3
+palabraMasLarga :: [Char] -> [Char]
+palabraMasLarga s = palabraMasLargaAux (sacarBlancosRepetidos (limpiarExtremos s))
+
+palabraMasLargaAux :: [Char] -> [Char]
+palabraMasLargaAux [] = []
+palabraMasLargaAux s
+ | contarPalabras s == 1 = s
+ | otherwise = masLargaEntreDos (primPalabra s) (palabraMasLargaAux (quitarPrimPalabra s))
+
+primPalabra :: [Char] -> [Char]
+primPalabra [] = []
+primPalabra (x:xs)
+ | x == ' ' = []
+ | otherwise = x : primPalabra xs
+
+quitarPrimPalabra :: [Char] -> [Char]
+quitarPrimPalabra [] = []
+quitarPrimPalabra s
+ | head s == ' ' = tail s
+ | otherwise = quitarPrimPalabra (tail s)
+
+masLargaEntreDos :: [Char] -> [Char] -> [Char] 
+masLargaEntreDos s r
+ | longitud s >= longitud r = s
+ | longitud s < longitud r = r
+
+--4.4
+palabras :: [Char] -> [[Char]]
+palabras s = palabrasAux (sacarBlancosRepetidos (limpiarExtremos s))
+
+palabrasAux :: [Char] -> [[Char]]
+palabrasAux [] = []
+palabrasAux s
+ | contarPalabras s == 1 = [s]
+ | otherwise = primPalabra s : palabrasAux (quitarPrimPalabra s)
+
+--4.5
+aplanar :: [[Char]] -> [Char]
+aplanar [] = []
+aplanar (x:xs) = x ++ aplanar (xs)
+
+--4.6
+aplanarConBlancos :: [[Char]] -> [Char]
+aplanarConBlancos [] = []
+aplanarConBlancos s
+ | longitud s == 1 = head s
+ | otherwise = head s ++ " " ++ aplanar (tail s)
+
+--4.7
+aplanarConNBlancos :: [[Char]] -> Integer -> [Char]
+aplanarConNBlancos [] _ = []
+aplanarConNBlancos s n
+ | longitud s == 1 = head s
+ | otherwise = head s ++ (nBlancos n) ++ aplanar (tail s)
+
+nBlancos :: Integer -> [Char]
+nBlancos 1 = " "
+nBlancos n = " " ++ nBlancos (n-1)
