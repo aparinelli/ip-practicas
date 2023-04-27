@@ -143,7 +143,31 @@ ordenar s | longitud s == 1 = s
 
 --4.
 --4.1.
+sacarBlancosRepetidos :: [Char] -> [Char]
+sacarBlancosRepetidos s = sacarBlancosRepetidosAux (limpiarPrincipioYFinal s)
 
+sacarBlancosRepetidosAux :: [Char] -> [Char]
+sacarBlancosRepetidosAux s
+ | not (pertenece ' ' s) = s
+ | head s == ' ' && segundo s == ' ' =  sacarBlancosRepetidosAux (tail s)
+ | otherwise = (head s) : sacarBlancosRepetidosAux (tail s)
+
+limpiarPrincipioYFinal :: [Char] -> [Char]
+-- elimina todos los blancos del principio y del final de la lista
+limpiarPrincipioYFinal s
+ | ultimo s /= ' ' && head s /= ' ' = s
+ | head s == ' ' = limpiarPrincipioYFinal (tail s)
+ | ultimo s == ' ' = limpiarPrincipioYFinal (principio s)
+
+--4.2
+contarPalabras :: [Char] -> Integer
+contarPalabras s = contarPalabrasAux (limpiarPrincipioYFinal (sacarBlancosRepetidos s))
+
+contarPalabrasAux :: [Char] -> Integer
+contarPalabrasAux s
+ | not (pertenece ' ' s) = 1
+ | head s == ' ' = 1 + contarPalabrasAux (tail s)
+ | otherwise = contarPalabrasAux (tail s)
 
 -- [2,1] -> [1,2]
 -- [2,3,1] -> [1,2,3]
