@@ -254,5 +254,35 @@ iesimo i s
  | i == (longitud s) - 1 = ultimo s
  | otherwise = iesimo i (principio s) 
 
--- [1,2,3] 1 -> 2
--- 
+--5.4
+sumaAcumulada :: [Integer] -> [Integer]
+sumaAcumulada [] = []
+sumaAcumulada [x] = [x]
+sumaAcumulada s = sumaAcumulada (principio s) ++ [sumatoria s]
+
+--5.5
+descomponerEnPrimos :: [Integer] -> [[Integer]]
+descomponerEnPrimos [] = []
+descomponerEnPrimos [x] = [descomponerEnPrimosUnico x]
+descomponerEnPrimos (x:xs) = (descomponerEnPrimosUnico x) : (descomponerEnPrimos xs)
+
+descomponerEnPrimosUnico :: Integer -> [Integer]
+descomponerEnPrimosUnico n
+ | esPrimo n = [n]
+ | otherwise = eliminarRepetidos ((menorDivisor n) : (descomponerEnPrimosUnico multiplicador))
+ where multiplicador = div n (menorDivisor n)
+
+menorDivisor :: Integer -> Integer
+menorDivisor 1 = 1
+menorDivisor n = menorDivisorDesde n 2
+
+menorDivisorDesde :: Integer -> Integer -> Integer
+menorDivisorDesde n m | mod n m == 0 = m
+                      | otherwise = menorDivisorDesde n (m+1)
+
+esPrimo :: Integer -> Bool
+esPrimo n | menorDivisor n == n = True
+          | otherwise =  False
+
+--6.
+--6.1
