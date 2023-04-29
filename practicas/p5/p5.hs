@@ -228,3 +228,31 @@ aplanarConNBlancos s n
 nBlancos :: Integer -> [Char]
 nBlancos 1 = " "
 nBlancos n = " " ++ nBlancos (n-1)
+
+--5.
+--5.1
+nat2bin :: Integer -> [Integer]
+nat2bin 0 = [0]
+nat2bin 1 = [1]
+nat2bin n = (nat2bin (div n 2)) ++ [mod n 2]
+
+--5.2
+bin2nat :: [Integer] -> Integer
+bin2nat [0] = 0
+bin2nat [1] = 2
+bin2nat (x:xs) = 2^((longitud (x:xs)) - 1) * x + bin2nat xs
+
+--5.3
+nat2hex :: Integer -> [Char]
+nat2hex n
+ | n < 16 = [iesimo n digitosHex]
+ | otherwise = nat2hex (div n 16) ++ [iesimo (mod n 16) digitosHex]
+ where digitosHex = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F']
+
+iesimo :: Integer -> [t] -> t
+iesimo i s
+ | i == (longitud s) - 1 = ultimo s
+ | otherwise = iesimo i (principio s) 
+
+-- [1,2,3] 1 -> 2
+-- 
