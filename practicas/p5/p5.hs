@@ -27,11 +27,10 @@ pertenece e (x:xs) = e == x || pertenece e xs
 
 --2.2
 todosIguales :: (Eq t) => [t] -> Bool
+todosIguales [x] = True
 todosIguales s
- | longitud s == 1 = True
- | longitud s == 2 = (head s) == segundo
- | otherwise = (head s) == segundo && todosIguales (tail s)
- where segundo = head (tail s)
+ | longitud s == 2 = (head s) == segundo s
+ | otherwise = (head s) == segundo s && todosIguales (tail s)
 
 segundo :: [t] -> t
 segundo s = head (tail s)
@@ -138,8 +137,8 @@ esMultiplo a b = mod a b == 0
 --3.9
 ordenar :: [Integer] -> [Integer]
 ordenar [] = []
-ordenar s | longitud s == 1 = s
-          | otherwise = ordenar (quitar (maximo s) s) ++ [maximo s]
+ordenar [x] = [x]
+ordenar s = ordenar (quitar (maximo s) s) ++ [maximo s]
 
 --4.
 --4.1.
@@ -286,3 +285,22 @@ esPrimo n | menorDivisor n == n = True
 
 --6.
 --6.1
+type Set a = [a]
+
+agregarATodos :: Integer -> Set (Set Integer) -> Set (Set Integer)
+agregarATodos _ [] = []
+agregarATodos n (c:cs)
+ | not (pertenece n c) = ordenar ((n:c)) : agregarATodos n cs
+ | otherwise = c : agregarATodos n cs
+
+--6.2
+partes :: Integer -> Set (Set Integer)
+partes 0 = [[]]
+partes n = partes (n-1) ++ agregarATodos n (partes (n-1))
+
+--6.3
+productoCartesiano :: Set Integer -> Set Integer -> Set (Integer, Integer)
+productoCartesiano [a] [b] = [(a,b)]
+productoCartesiano r s
+ | longitud r == 1 = (head r, head s) : productoCartesiano r (tail s)
+ | otherwise = productoCartesiano [head r] s ++ productoCartesiano (tail r) s 
