@@ -154,20 +154,21 @@ esPrimo n | menorDivisor n == n = True
 --c.
 sonCoprimos :: Integer -> Integer -> Bool
 sonCoprimos a b | menorDivisor a == menorDivisor b = False
-                | ambosPrimos && a /= b = True
-                | otherwise = sonCoprimos (menorDivisor a) cocienteB && sonCoprimos cocienteA (menorDivisor b)
-                where ambosPrimos = esPrimo a && esPrimo b
-                      cocienteA = div a (menorDivisor a)
+                | esPrimo a && esPrimo b && a /= b = True
+                | menorDivisor a > menorDivisor b = sonCoprimos (menorDivisor a) cocienteB
+                | menorDivisor b > menorDivisor a = sonCoprimos (menorDivisor b) cocienteA
+                where cocienteA = div a (menorDivisor a)
                       cocienteB = div b (menorDivisor b)
+                      
 --d.
 nEsimoPrimo :: Integer -> Integer
-nEsimoPrimo n = nEsimoPrimoAux 2 2 0 n
+nEsimoPrimo n = nEsimoPrimoAux 0 2 n
 
-nEsimoPrimoAux :: Integer -> Integer -> Integer -> Integer -> Integer
-nEsimoPrimoAux primoAnterior p primosContados n
- | primosContados == n = primoAnterior
- | esPrimo p = nEsimoPrimoAux p (p+1) (primosContados+1) n
- | not (esPrimo p) = nEsimoPrimoAux primoAnterior (p+1) primosContados n
+nEsimoPrimoAux :: Integer -> Integer -> Integer -> Integer
+nEsimoPrimoAux primosContados i n
+ | primosContados == n = (i-1)
+ | esPrimo i = nEsimoPrimoAux (primosContados+1) (i+1) n
+ | otherwise = nEsimoPrimoAux primosContados (i+1) n
 
 --17.
 esFibonacci :: Integer -> Bool
@@ -176,17 +177,16 @@ esFibonacci n = esFibonacciAux n 0 0
 esFibonacciAux :: Integer -> Integer -> Integer -> Bool
 esFibonacciAux n i fibAnterior 
  | fibAnterior == n = True
- | fibAnterior > n = False
- | fibAnterior < n = esFibonacciAux n (i+1) (fibonacci (i+1))
+ | fibAnterior > n  = False
+ | fibAnterior < n  = esFibonacciAux n (i+1) (fibonacci (i+1))
 
 --18.
 mayorDigitoPar :: Integer -> Integer
 mayorDigitoPar n | esPar ultimo = elMayor ultimo (mayorDigitoPar restoDelNumero) 
                  | ultimo == restoDelNumero = -1
                  | otherwise = mayorDigitoPar restoDelNumero
-                 where
-                     ultimo = mod n 10
-                     restoDelNumero = div n 10
+                 where ultimo = mod n 10
+                       restoDelNumero = div n 10
 
 elMayor :: Integer -> Integer -> Integer
 elMayor x y | x >= y = x
@@ -197,13 +197,13 @@ esPar n = mod n 2 == 0
 
 --19.
 esSumaInicialDePrimos :: Integer -> Bool
-esSumaInicialDePrimos n = esSIPAux n 1 2
+esSumaInicialDePrimos n = esSIPAux n 1
 
-esSIPAux :: Integer -> Integer -> Integer -> Bool
-esSIPAux n i sumaAnterior 
- | sumaAnterior == n = True
- | sumaAnterior > n = False
- | sumaAnterior < n = esSIPAux n (i+1) (sumaMPrimos (i+1))
+esSIPAux :: Integer -> Integer -> Bool
+esSIPAux n i
+ | sumaMPrimos i == n = True
+ | sumaMPrimos i > n = False
+ | sumaMPrimos i < n = esSIPAux n (i+1)
 
 sumaMPrimos :: Integer -> Integer
 sumaMPrimos m | m == 1 = 2
