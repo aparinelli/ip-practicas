@@ -211,11 +211,78 @@ def trabaja_o_vacaciona(sexo: str, edad: int) -> str:
 # }
 
 # 6.
+# 6.1
+def imprimir_del_1_al_10():
+    n: int = 1
+    while (n <= 10):
+        print(n)
+        n += 1
+
 # 6.2
 def imprimir_pares_entre_10_y_40():
-    i: int = 10
-    while (i <= 40):
-        if es_par(i):
-            print(i)
+    n: int = 10
+    while (n <= 40):
+        if es_par(n):
+            print(n)
+        n += 1
+
+# 6.3
+def imprimir_eco_10_veces():
+    i: int = 0
+    while (i < 10):
+        print("eco")
         i += 1
+
+# 6.4
+def despegue_desde_n(n: int):
+    while (n > 0):
+        print(n)
+        n -= 1
+    print("Despegue")
+
+# 6.5 
+def viaje_en_el_tiempo(año_partida: int, año_llegada: int):
+    año: int = año_partida
+    while (año > año_llegada):
+        año -= 1
+        print(f"Viajó un año al pasado, estamos en el año {año}")
+
+# 6.6
+def viaje_en_el_tiempo_al_384AC(año_partida: int):
+    año: int = año_partida
+    while (año - 20 >= -384):
+        año -= 20
+        print(f"Viajó veinte años al pasado, estamos en el año {año}")
+
+# 7
+# 7.1
+def imprimir_del_1_al_10_for():
+    for n in range(1, 11):
+        print(n)
+
+# 7.2
+def imprimir_pares_entre_10_y_40_for():
+    for n in range(10, 41, 2):
+        print(n)
+
+# 7.3
+def imprimir_eco_10_veces_for():
+    for i in range(0, 10, 1):
+        print("eco")
+
+# 7.4
+def despegue_desde_n_for(n: int):
+    for i in range(n, 0, -1):
+        print(i)
+    print("Despegue")
+    
+# 7.5
+def viaje_en_el_tiempo_for(año_partida: int, año_llegada: int):
+    for año in range(año_partida - 1, año_llegada - 1, -1):
+        print(f"Viajó un año al pasado, estamos en el año {año}")
+
+# 7.6 
+def viaje_en_el_tiempo_al_384AC_for(año_partida: int):
+    for año in range(año_partida - 20, -384 - 1, -20):
+        print(f"Viajó veinte años al pasado, estamos en el año {año}")
 
