@@ -285,4 +285,3 @@ def viaje_en_el_tiempo_for(año_partida: int, año_llegada: int):
 def viaje_en_el_tiempo_al_384AC_for(año_partida: int):
     for año in range(año_partida - 20, -384 - 1, -20):
         print(f"Viajó veinte años al pasado, estamos en el año {año}")
-

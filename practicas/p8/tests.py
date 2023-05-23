@@ -86,6 +86,8 @@ print('es_palindroma("a")')
 print(es_palindroma("a"))
 print('es_palindroma("menem")')
 print(es_palindroma("menem"))
+print('es_palindroma("mennem")')
+print(es_palindroma("mennem"))
 print('es_palindroma("hereje")')
 print(es_palindroma("hereje"))
 
@@ -118,3 +120,72 @@ print('tiene_3_vocales_distintas("casa")')
 print(tiene_3_vocales_distintas("casa"))
 print('tiene_3_vocales_distintas("lejanos")')
 print(tiene_3_vocales_distintas("lejanos"))
+
+print("-----")
+
+print("2")
+print("2.1")
+s = [1,2,3,4]
+print("s: ",  s)
+colocar_ceros_en_pares_inout(s)
+print("s: ",  s)
+
+print("-----")
+
+print("2.2")
+s = [1,2,3,4]
+print("s: ",  s)
+s_modificada = colocar_ceros_en_pares_in(s)
+print("s: ",  s)
+print("s_modificada: ",  s_modificada)
+
+print("-----")
+
+print("2.3")
+print('elimina_vocales("aeiou")')
+print(elimina_vocales("aeiou"))
+print('elimina_vocales("bcdfg")')
+print(elimina_vocales("bcdfg"))
+print('elimina_vocales("murcielago")')
+print(elimina_vocales("murcielago"))
+
+print("-----")
+
+print("2.4")
+print('reemplaza_vocales("aeiou")')
+print(reemplaza_vocales("aeiou"))
+print('reemplaza_vocales("bcdfg")')
+print(reemplaza_vocales("bcdfg"))
+print('reemplaza_vocales("murcielago")')
+print(reemplaza_vocales("murcielago"))
+
+print("-----")
+
+print("2.5")
+print('da_vuelta_str("aeiou")')
+print(da_vuelta_str("aeiou"))
+print('da_vuelta_str("bcdfg")')
+print(da_vuelta_str("bcdfg"))
+print('da_vuelta_str("murcielago")')
+print(da_vuelta_str("murcielago"))
+
+print("-----")
+
+print("3.")
+print("3.1")
+print("Descomentar las líneas correspondientes para probar.")
+# nombres = construye_lista_de_nombres()
+# print(nombres)
+
+print("-----")
+
+print("3.2")
+print("Descomentar las líneas correspondientes para probar.")
+# historial = construye_historial_de_monedero()
+# print(historial)
+
+print("-----")
+
+print("3.3")
+print("Descomentar las líneas correspondientes para probar.")
+
