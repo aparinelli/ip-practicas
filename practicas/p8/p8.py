@@ -4,7 +4,7 @@ vocales: list([str]) = ['a', 'e', 'i', 'o', 'u']
 
 # 1.
 # 1.1
-def pertenece(s: list([int]), e: int) -> bool:
+def pertenece1(s: list([int]), e: int) -> bool:
     res: bool = False
     for i in range(0, len(s)):
         if s[i] == e:
@@ -25,6 +25,15 @@ def pertenece3(s: list([int]), e: int) -> bool:
     for i in range(0, len(s)):
         res = s[i] == e or res
     return res
+
+# Para tipos genéricos
+def pertenece(s, e) -> bool:
+    res: bool = False
+    for i in range(0, len(s)):
+        if s[i] == e:
+            res = True
+    return res
+
 
 # 1.2
 def divide_a_todos(s: list([int]), e: int) -> bool:
@@ -106,7 +115,7 @@ def tiene_3_vocales_distintas(palabra: str):
     res: bool = False
 
     for letra in palabra:
-        if pertenece(letra, vocales):
+        if pertenece(vocales, letra):
             cant_vocales += 1
     
     if cant_vocales >= 3:
@@ -133,7 +142,7 @@ def elimina_vocales(cadena: str):
     res: str = ""
 
     for letra in cadena:
-        if not(letra in vocales):
+        if not(pertenece(vocales, letra)):
             res += letra
 
     return res
@@ -144,7 +153,7 @@ def reemplaza_vocales(cadena: str):
     res: str = ""
 
     for letra in cadena:
-        if letra in vocales:
+        if pertenece(vocales, letra):
             res += ' '
         else: 
             res += letra
@@ -162,7 +171,7 @@ def da_vuelta_str(cadena: str):
 
 # 3.
 # 3.1
-def construye_lista_de_nombres():
+def construye_lista_de_nombres() -> list([str]):
     nombres: list([str]) = []
     
     while (True):
@@ -174,8 +183,8 @@ def construye_lista_de_nombres():
     return nombres
 
 # 3.2
-def construye_historial_de_monedero():
-    historial: list((str, int)) = []
+def construye_historial_de_monedero() -> list([(str, int)]):
+    historial: list([(str, int)]) = []
     
     while (True):
         operacion = input("Ingrese C para cargar créditos, D para descontar créditos o X para terminar: ")
@@ -191,4 +200,38 @@ def construye_historial_de_monedero():
     return historial
 
 # 3.3
-# def siete_y_medio():
+def siete_y_medio() -> list([int]):
+    cartas: list([int]) = [1,2,3,4,5,6,7,10,11,12]
+    historial: list([int]) = []
+    suma_total: float = 0
+
+    while(True):
+        continuar = input("¿Desea sacar una carta? (s)í o (n)o: ")
+        
+        if continuar == "n":
+            break
+        else:
+            carta: int = choice(cartas)
+            
+            historial.append(carta)
+            if pertenece([10,11,12], carta):
+                suma_total += 0.5
+            else:
+                suma_total += carta
+            
+            if suma_total > 7.5:
+                break
+    
+    print("¡Perdiste! Tus cartas fueron: ", historial)
+    return historial
+
+# 4
+# 4.1 
+def pertenece_a_cada_uno(s: list([[int]]), e: int) -> list([bool]):
+    res: list([bool]) = []
+    for i in range(0, len(s)):
+        if pertenece(s[i], e):
+            res.append(True)
+        else:
+            res.append(False)
+    return res
