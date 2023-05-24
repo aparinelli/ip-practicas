@@ -204,3 +204,28 @@ print(pertenece_a_cada_uno([[1,2], [4,5,6]], 1))
 print("pertenece_a_cada_uno([[1,2,3,4], [1,3,6]], 1)")
 print(pertenece_a_cada_uno([[1,2,3,4], [1,3,6]], 1))
 
+print("-----")
+
+print("4.2")
+print("es_matriz([])")
+print(es_matriz([]))
+print("es_matriz([[], [2,2,2], [3,3,3]])")
+print(es_matriz([[], [2,2,2], [3,3,3]]))
+print("es_matriz([[1,1,1], [2,2,2], [3,3,3]])")
+print(es_matriz([[1,1,1], [2,2,2], [3,3,3]]))
+
+print("-----")
+
+print("4.3")
+print("filas_ordenadas([[1,1,1], [2,2], [3]])")
+print(filas_ordenadas([[1,1,1], [2,2], [3]]))
+print("filas_ordenadas([[1,2,3,4], [2,1,5], [3,8]])")
+print(filas_ordenadas([[1,2,3,4], [2,1,5], [3,8]]))
+
+print("-----")
+
+print("4.4")
+# print(elevar_matriz(2,2))
+# print(elevar_matriz(3,2))
+# print(elevar_matriz(2,3))
+print(elevar_matriz(25,25))

@@ -235,3 +235,43 @@ def pertenece_a_cada_uno(s: list([[int]]), e: int) -> list([bool]):
         else:
             res.append(False)
     return res
+
+# 4.2
+def es_matriz(s: list([[int]])) -> bool:
+    res: bool = True
+    if len(s) != 0 and len(s[0]) != 0:
+        longitud_de_primera_fila = len(s[0])
+        for i in range(1, len(s)):
+            if len(s[i]) != longitud_de_primera_fila:
+                res = False
+    else:
+        res = False
+
+    return res
+
+# 4.3
+def filas_ordenadas(m: list([[int]])) -> list([bool]):
+    res: list([bool]) = []
+    for i in range(0, len(m)):
+        res.append(ordenados(m[i]))
+    return res
+
+# 4.4
+import numpy as np
+def elevar_matriz(d: int, p: int) -> np.array:
+    matriz: np.array = np.random.random((d, d))
+    res: np.array = matriz.copy()
+    print("matriz: ")
+    print(matriz)
+
+    while p > 0:
+        for i in range(d): # filas
+            for j in range(d): # columnas
+                suma: float = 0
+                for n in range(0, d):
+                    suma += res[i][n] * matriz[n][j]
+                res[i][j] = suma
+        p -= 1
+    
+    return res
+
