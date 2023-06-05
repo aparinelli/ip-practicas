@@ -95,7 +95,7 @@ f4 n q = f2 (2*n) q - f2 (n-1) q
 
 --11.
 eAprox :: Integer -> Float
-eAprox n | n == 0 = 1 / fromInteger (factorial 0)
+eAprox n | n == 0 = 1.0
          | otherwise = 1 / fromInteger (factorial n) + eAprox (n-1)
 
 factorial :: Integer -> Integer
@@ -155,8 +155,8 @@ esPrimo n | menorDivisor n == n = True
 sonCoprimos :: Integer -> Integer -> Bool
 sonCoprimos a b | menorDivisor a == menorDivisor b = False
                 | esPrimo a && esPrimo b && a /= b = True
-                | menorDivisor a > menorDivisor b = sonCoprimos (menorDivisor a) cocienteB
-                | menorDivisor b > menorDivisor a = sonCoprimos (menorDivisor b) cocienteA
+                | menorDivisor a > menorDivisor b = sonCoprimos (menorDivisor a) cocienteB -- si primoA > primoB, solo puedo llegar a encontrar a primoA en cocienteB
+                | menorDivisor b > menorDivisor a = sonCoprimos (menorDivisor b) cocienteA -- si primoB > primoA, solo puedo llegar a encontrar a primoB en cocienteA
                 where cocienteA = div a (menorDivisor a)
                       cocienteB = div b (menorDivisor b)
                       
