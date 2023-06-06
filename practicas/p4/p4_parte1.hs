@@ -182,8 +182,9 @@ esFibonacciDesde n i
 
 --18.
 mayorDigitoPar :: Integer -> Integer
-mayorDigitoPar n | esPar ultimo = elMayor ultimo (mayorDigitoPar restoDelNumero) 
-                 | ultimo == restoDelNumero = -1
+mayorDigitoPar n | n < 10 && esPar n = n
+                 | n < 10 && not (esPar n) = -1
+                 | esPar ultimo = elMayor ultimo (mayorDigitoPar restoDelNumero)
                  | otherwise = mayorDigitoPar restoDelNumero
                  where ultimo = mod n 10
                        restoDelNumero = div n 10
@@ -211,13 +212,10 @@ sumaMPrimos m | m == 1 = 2
 
 --20.
 tomaValorMax :: Integer -> Integer -> Integer
-tomaValorMax n1 n2 = tomaValorMaxAux n1 n2 n1 (sumaDivisores n1)
-
-tomaValorMaxAux :: Integer -> Integer -> Integer -> Integer -> Integer
-tomaValorMaxAux i n2 m sumaAnterior
- | i == n2+1 = m
- | sumaDivisores i >= sumaAnterior = tomaValorMaxAux (i+1) n2 i (sumaDivisores i)
- | otherwise = tomaValorMaxAux (i+1) n2 m sumaAnterior
+tomaValorMax n1 n2
+ | n1 == n2 = n1
+ | sumaDivisores n1 >= sumaDivisores n2 = tomaValorMax n1 (n2 - 1)
+ | sumaDivisores n1 < sumaDivisores n2 = tomaValorMax (n1 + 1) n2
 
 sumaDivisores :: Integer -> Integer
 sumaDivisores n = sumaDivisoresHasta n n
