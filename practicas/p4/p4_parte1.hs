@@ -172,13 +172,13 @@ nEsimoPrimoAux primosContados i n
 
 --17.
 esFibonacci :: Integer -> Bool
-esFibonacci n = esFibonacciAux n 0 0
+esFibonacci n = esFibonacciDesde n 0
 
-esFibonacciAux :: Integer -> Integer -> Integer -> Bool
-esFibonacciAux n i fibAnterior 
- | fibAnterior == n = True
- | fibAnterior > n  = False
- | fibAnterior < n  = esFibonacciAux n (i+1) (fibonacci (i+1))
+esFibonacciDesde :: Integer -> Integer -> Bool
+esFibonacciDesde n i
+ | fibonacci i == n = True
+ | fibonacci i > n = False
+ | otherwise = esFibonacciDesde n (i+1)
 
 --18.
 mayorDigitoPar :: Integer -> Integer
