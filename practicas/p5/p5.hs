@@ -28,19 +28,15 @@ pertenece e (x:xs) = e == x || pertenece e xs
 --2.2
 todosIguales :: (Eq t) => [t] -> Bool
 todosIguales [x] = True
-todosIguales s
- | longitud s == 2 = (head s) == segundo s
- | otherwise = (head s) == segundo s && todosIguales (tail s)
+todosIguales (x:xs) = x == (head xs) && todosIguales xs
 
 segundo :: [t] -> t
 segundo s = head (tail s)
 
 --2.3
 todosDistintos :: (Eq t) => [t] -> Bool
-todosDistintos s
- | longitud s == 1 = True
- | pertenece (head s) (tail s) = False
- | otherwise = todosDistintos (tail s)
+todosDistintos [x] = True
+todosDistintos (x:xs) = not (pertenece x xs) && todosDistintos xs
 
 --2.4
 hayRepetidos :: (Eq t) => [t] -> Bool
@@ -48,31 +44,33 @@ hayRepetidos s = not (todosDistintos s)
 
 --2.5 
 quitar :: (Eq t) => t -> [t] -> [t]
-quitar x s
- | not (pertenece x s) = s
- | x == (head s) = tail s
- | otherwise = (head s) : quitar x (tail s)
+quitar _ [] = []
+quitar e (x:xs)
+ | e == x = xs
+ | otherwise = x : (quitar e xs)
 
 -- 2.6.
 quitarTodos :: (Eq t) => t -> [t] -> [t]
-quitarTodos x s
- | not (pertenece x s) = s
- | x == (head s) = quitarTodos x (tail s)
- | otherwise = (head s) : quitarTodos x (tail s)
+quitarTodos _ [] = []
+quitarTodos e (x:xs)
+ | e == x = quitarTodos e xs
+ | otherwise = x : (quitarTodos e xs)
 
 --2.7
 eliminarRepetidos :: (Eq t) => [t] -> [t]
-eliminarRepetidos s
- | not (hayRepetidos s) = s
- | pertenece (head s) (tail s) = eliminarRepetidos (tail s)
- | otherwise = (head s) : (eliminarRepetidos (tail s))
+eliminarRepetidos [x] = [x]
+eliminarRepetidos (x:xs)
+ | pertenece x xs = eliminarRepetidos xs
+ | otherwise = x : eliminarRepetidos xs
 
 --2.8
 mismosElementos :: (Eq t) => [t] -> [t] -> Bool
-mismosElementos s r
- | longitud s == 0 = False
- | longitud s == 1 = pertenece (head s) r
- | otherwise = pertenece (head s) r && mismosElementos (tail s) r 
+mismosElementos s r = todosPertenecen s r && todosPertenecen r s
+
+todosPertenecen :: (Eq t) => [t] -> [t] -> Bool
+todosPertenecen [] [] = True
+todosPertenecen [x] s = pertenece x s
+todosPertenecen (x:xs) s = pertenece x xs && todosPertenecen xs s
 
 --2.9
 capicua :: (Eq t) => [t] -> Bool
