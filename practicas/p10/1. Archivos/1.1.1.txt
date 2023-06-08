@@ -1,0 +1,6 @@
+este
+archivo
+tiene
+muchas
+lineas
+y la palabra lineas aparece dos veces
