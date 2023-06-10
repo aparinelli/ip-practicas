@@ -285,3 +285,100 @@ def viaje_en_el_tiempo_for(año_partida: int, año_llegada: int):
 def viaje_en_el_tiempo_al_384AC_for(año_partida: int):
     for año in range(año_partida - 20, -384 - 1, -20):
         print(f"Viajó veinte años al pasado, estamos en el año {año}")
+
+# 8
+# 8.1
+# Estado a
+x = 5
+# Estado b
+y = 7
+
+# 8.2
+# Estado a
+x = 5
+# Estado b
+y = 7
+# Estado c
+# Vale z == x@a + y@b
+z = x + y
+
+# 8.3
+# Estado a
+x = 5
+# Estado b
+x = "hora"
+
+# 8.4
+# Estado a
+x = True
+# Estado b
+y = False
+# Estado c
+# Vale res == x@a and y@b
+res = x and y
+
+# 8.5
+# Estado a
+x = False
+# Estado b
+# Vale res == not(x@a)
+res = not(x)
+
+# 9
+def rt(x: int, g: int) -> int:
+    g = g + 1
+    return x + g
+
+g: int = 0
+def ro(x: int) -> int:
+    global g
+    print(g)
+    g = g + 1
+    return x + g
+
+# 1.
+# Estado a
+g: int = 0
+
+# Estado b
+# Vale g == g@a + 1 == 0 + 1 == 1
+# Vale x1 == g + 1 == 1 + 1 = 2
+x1 = ro(1)
+
+# # Estado c
+# Vale g == g@b + 1 == 1 + 1 == 2
+# Vale x2 == g + 1 == 2 + 1 == 3
+x2 = ro(1)
+
+# # Estado d
+# Vale g == g@c + 1 = 3 + 1 == 4
+x3 = ro(1)
+
+# Luego, evaluar ro(1) tres veces devuelve 4
+
+# 9.2.
+# Estado a
+# x1 = 1 + 0
+x1 = rt(1,0)
+
+# 9.4.
+
+# Estado b
+x2 = rt(1,0)
+
+# Estado c
+# Como no se modifica ninguna variable global, evaluar rt cualquier cantidad de veces seguidas devuelve siempre 2
+x3 = rt(1,0)
+
+# 9.4
+# problema rt (in x: Z, in g: Z) : Z {
+#   requiere: {True}
+#   asegura: {res será igual a x + g + 1}
+# }
+
+# problema ro (in x: Z, inout g: Z)
+# requiere: {True}
+# modifica: g
+# asegura: {g aumentará su valor global en 1 y res será igual al nuevo valor de g más x}
+# }
+
