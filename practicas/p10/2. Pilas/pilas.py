@@ -50,26 +50,23 @@ def esta_bien_balanceada(s: str) -> bool:
     
     bien_balanceada: bool = True
     parentesis: int = 0
-    
-    anteriores = LifoQueue()
-    anteriores.put('(')
+
+    simbolo_anterior = '('
 
     while not p.empty():
         simbolo: str = p.get()
-        simbolo_anterior: str = anteriores.get()
+
         if simbolo == '(':
             if es_operacion(simbolo_anterior) or simbolo_anterior == '(': # solo permito operaciones y '(' antes de ')'
                 parentesis += 1
             else:
                 bien_balanceada = False
-            anteriores.put(simbolo)
 
         elif simbolo == ')':
             if es_numero(simbolo_anterior) or simbolo_anterior == ')': # solo permito números y paréntesis antes de ')'
                 parentesis -= 1
             else:
                 bien_balanceada = False
-            anteriores.put(simbolo)
 
         else:
             if es_operacion(simbolo):
@@ -82,11 +79,12 @@ def esta_bien_balanceada(s: str) -> bool:
                 if simbolo_anterior == ')':
                     bien_balanceada = False
 
-            anteriores.put(simbolo)
          
         if parentesis < 0:
             bien_balanceada = False
         
+        simbolo_anterior = simbolo
+
     return bien_balanceada
 
 def es_numero(simbolo: str) -> bool:
