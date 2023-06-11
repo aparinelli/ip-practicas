@@ -89,9 +89,8 @@ productoria (x:xs) = x * productoria xs
 
 --3.3
 maximo :: [Integer] -> Integer
-maximo s | longitud s == 1 = head s
-         | longitud s == 2 = maximoEntreDos (head s) (segundo s)
-         | otherwise = maximoEntreDos (head s) (maximo (tail s))
+maximo [x] = x
+maximo (x:xs) = maximoEntreDos x (maximo xs)
 
 maximoEntreDos :: Integer -> Integer -> Integer
 maximoEntreDos a b | a >= b = a
@@ -100,9 +99,8 @@ maximoEntreDos a b | a >= b = a
 --3.4
 sumarN :: Integer -> [Integer] -> [Integer]
 sumarN _ [] = []
-sumarN n s
- | longitud s == 1 = [(head s) + 1]
- | otherwise = ((head s) + n) : sumarN n (tail s)
+sumarN n [x] = [x+1]
+sumarN n (x:xs) = (x+n) : sumarN n xs
 
 --3.5
 sumarElPrimero :: [Integer] -> [Integer]
@@ -115,9 +113,9 @@ sumarElUltimo s = sumarN (ultimo s) s
 --3.7
 pares :: [Integer] -> [Integer]
 pares [] = []
-pares s 
- | esPar (head s) = (head s) : pares (tail s) 
- | otherwise = pares (tail s)        
+pares (x:xs) 
+ | esPar x = x : pares xs
+ | otherwise = pares xs    
  
 esPar :: Integer -> Bool
 esPar a = mod a 2 == 0
@@ -139,15 +137,26 @@ ordenar [x] = [x]
 ordenar s = ordenar (quitar (maximo s) s) ++ [maximo s]
 
 --4.
---4.1.
+-- 4.1.
 sacarBlancosRepetidos :: [Char] -> [Char]
-sacarBlancosRepetidos s = sacarBlancosRepetidosAux (limpiarExtremos s)
+sacarBlancosRepetidos [] = []
+sacarBlancosRepetidos [' '] = [' ']
+sacarBlancosRepetidos [' ', ' '] = [' ']
+sacarBlancosRepetidos (x:xs)
+ | x == ' ' && (head xs) == ' ' = sacarBlancosRepetidos xs
+ | otherwise = x : sacarBlancosRepetidos xs
 
-sacarBlancosRepetidosAux :: [Char] -> [Char]
-sacarBlancosRepetidosAux s
- | not (pertenece ' ' s) = s
- | head s == ' ' && segundo s == ' ' =  sacarBlancosRepetidosAux (tail s)
- | otherwise = (head s) : sacarBlancosRepetidosAux (tail s)
+
+
+--4.2
+contarPalabras :: [Char] -> Integer
+contarPalabras s = contarPalabrasAux (limpiarExtremos (sacarBlancosRepetidos s))
+
+contarPalabrasAux :: [Char] -> Integer
+contarPalabrasAux (x:xs)
+ | not (pertenece ' ' (x:xs)) = 1
+ | x == ' ' = 1 + contarPalabrasAux xs
+ | otherwise = contarPalabrasAux xs
 
 limpiarExtremos :: [Char] -> [Char]
 -- elimina todos los blancos del principio y del final de la lista
@@ -155,16 +164,6 @@ limpiarExtremos s
  | ultimo s /= ' ' && head s /= ' ' = s
  | head s == ' ' = limpiarExtremos (tail s)
  | ultimo s == ' ' = limpiarExtremos (principio s)
-
---4.2
-contarPalabras :: [Char] -> Integer
-contarPalabras s = contarPalabrasAux (limpiarExtremos (sacarBlancosRepetidos s))
-
-contarPalabrasAux :: [Char] -> Integer
-contarPalabrasAux s
- | not (pertenece ' ' s) = 1
- | head s == ' ' = 1 + contarPalabrasAux (tail s)
- | otherwise = contarPalabrasAux (tail s)
 
 --4.3
 palabraMasLarga :: [Char] -> [Char]
@@ -184,9 +183,9 @@ primPalabra (x:xs)
 
 quitarPrimPalabra :: [Char] -> [Char]
 quitarPrimPalabra [] = []
-quitarPrimPalabra s
- | head s == ' ' = tail s
- | otherwise = quitarPrimPalabra (tail s)
+quitarPrimPalabra (x:xs)
+ | x == ' ' = xs
+ | otherwise = quitarPrimPalabra xs
 
 masLargaEntreDos :: [Char] -> [Char] -> [Char] 
 masLargaEntreDos s r
@@ -211,16 +210,14 @@ aplanar (x:xs) = x ++ aplanar (xs)
 --4.6
 aplanarConBlancos :: [[Char]] -> [Char]
 aplanarConBlancos [] = []
-aplanarConBlancos s
- | longitud s == 1 = head s
- | otherwise = head s ++ " " ++ aplanar (tail s)
+aplanarConBlancos [s] = s
+aplanarConBlancos (x:xs) = (x ++ " ") ++ aplanarConBlancos xs
 
 --4.7
 aplanarConNBlancos :: [[Char]] -> Integer -> [Char]
 aplanarConNBlancos [] _ = []
-aplanarConNBlancos s n
- | longitud s == 1 = head s
- | otherwise = head s ++ (nBlancos n) ++ aplanar (tail s)
+aplanarConNBlancos [s] _ = s
+aplanarConNBlancos (x:xs) n = (x ++ nBlancos n) ++ aplanarConNBlancos xs n
 
 nBlancos :: Integer -> [Char]
 nBlancos 1 = " "
@@ -237,13 +234,13 @@ nat2bin n = (nat2bin (div n 2)) ++ [mod n 2]
 bin2nat :: [Integer] -> Integer
 bin2nat [0] = 0
 bin2nat [1] = 2
-bin2nat (x:xs) = 2^((longitud (x:xs)) - 1) * x + bin2nat xs
+bin2nat (x:xs) = 2^(longitud xs) * x + bin2nat xs
 
 --5.3
 nat2hex :: Integer -> [Char]
 nat2hex n
  | n < 16 = [iesimo n digitosHex]
- | otherwise = nat2hex (div n 16) ++ [iesimo (mod n 16) digitosHex]
+ | otherwise = nat2hex (div n 16) ++ nat2hex (mod n 1)
  where digitosHex = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F']
 
 iesimo :: Integer -> [t] -> t
@@ -298,7 +295,7 @@ partes n = partes (n-1) ++ agregarATodos n (partes (n-1))
 
 --6.3
 productoCartesiano :: Set Integer -> Set Integer -> Set (Integer, Integer)
-productoCartesiano [a] [b] = [(a,b)]
-productoCartesiano r s
- | longitud r == 1 = (head r, head s) : productoCartesiano r (tail s)
- | otherwise = productoCartesiano [head r] s ++ productoCartesiano (tail r) s 
+productoCartesiano [r] [t] = [(r,t)]
+productoCartesiano [r] (t:ts) = (r, t) : productoCartesiano [r] ts
+productoCartesiano (r:rs) [t] = (r,t) : productoCartesiano rs [t]
+productoCartesiano (r:rs) (t:ts) = productoCartesiano [r] (t:ts) ++ productoCartesiano rs (t:ts)
