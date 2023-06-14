@@ -1,15 +1,10 @@
 --21.
 pitagoras :: Integer -> Integer -> Integer -> Integer
-pitagoras m n r = sumatoriaDoble m n r
+pitagoras m n r = contarPares m n r 0 0 
 
-sumatoriaDoble :: Integer -> Integer -> Integer -> Integer
-sumatoriaDoble 0 _ _ = 0
-sumatoriaDoble p q r = sumatoriaDoble (p-1) q r + sumatoriaInterna p q r
-
-sumatoriaInterna :: Integer -> Integer -> Integer -> Integer
-sumatoriaInterna _ 0 _ = 0
-sumatoriaInterna p q r 
- | p^2 + q^2 <= r^2 = 1 + sumatoriaInterna p (q-1) r
- | otherwise = sumatoriaInterna p q r
-
-
+contarPares :: Integer -> Integer -> Integer -> Integer -> Integer -> Integer
+contarPares m n r p q
+ | p > m = 0
+ | q > n = contarPares m n r (p+1) 0 
+ | p^2 + q^2 <= r^2 = 1 + contarPares m n r p (q+1) 
+ | otherwise = contarPares m n r p (q+1) 

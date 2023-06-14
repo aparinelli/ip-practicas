@@ -121,12 +121,13 @@ sumatoriaInterna n j = n^j + sumatoriaInterna n (j-1)
 
 --14. 
 sumaPotencias :: Integer -> Integer -> Integer -> Integer
-sumaPotencias _ 0 _ = 0
-sumaPotencias q n m = sumaPotencias q (n-1) m + sumaPotenciasInterna q n m
+sumaPotencias q n m = sumaPotenciasDesde q n m 0 0
 
-sumaPotenciasInterna :: Integer -> Integer -> Integer -> Integer
-sumaPotenciasInterna _ _ 0 = 0
-sumaPotenciasInterna q n m = q^(n+m) + sumaPotenciasInterna q n (m-1)
+sumaPotenciasDesde :: Integer -> Integer -> Integer -> Integer -> Integer -> Integer
+sumaPotenciasDesde q n m a b 
+ | a > n = 0
+ | b > m = sumaPotenciasDesde q n m (a+1) 0
+ | otherwise = q^(a+b) + sumaPotenciasDesde q n m a (b+1)
 
 --15.
 sumaRacionales :: Integer -> Integer -> Float
