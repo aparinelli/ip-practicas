@@ -121,11 +121,11 @@ sumatoriaInterna n j = n^j + sumatoriaInterna n (j-1)
 
 --14. 
 sumaPotencias :: Integer -> Integer -> Integer -> Integer
-sumaPotencias q 0 m = sumaPotenciasInterna q 0 (m-1)
-sumaPotencias q n m = sumaPotencias q (n-1) m + sumaPotenciasInterna q n (m-1)
+sumaPotencias _ 0 _ = 0
+sumaPotencias q n m = sumaPotencias q (n-1) m + sumaPotenciasInterna q n m
 
 sumaPotenciasInterna :: Integer -> Integer -> Integer -> Integer
-sumaPotenciasInterna q n 0 = q^n
+sumaPotenciasInterna _ _ 0 = 0
 sumaPotenciasInterna q n m = q^(n+m) + sumaPotenciasInterna q n (m-1)
 
 --15.
